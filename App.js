@@ -1,4 +1,5 @@
-import * as React from 'react';
+//import * as React from 'react';
+import React, {useState} from 'react';
 import { Text, View,TouchableOpacity,Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,13 +8,13 @@ import {Picker} from '@react-native-picker/picker';
 
 
 function HomeScreen() {
-  const [selectedLanguage, setSelectedLanguage] = React.useState('manisa');
+  const [selectedLanguage, setSelectedLanguage] = useState('manisa');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f09',flexDirection: "column" }}>
-      <Text style={{flex: 0.5, fontWeight: 'bold',  fontSize: 30 }}>Hastane kayıt randevu sistemine hoş geldiniz!</Text>
+    <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center', backgroundColor: '#f09',flexDirection: "column" }}>
+      <Text style={{ fontWeight: 'bold',  fontSize: 30 }}>Hastane kayıt randevu sistemine hoş geldiniz!</Text>
       
       <Picker
-        style={{ backgroundColor: "yellow", flex: 0.1 }}
+        style={{ backgroundColor: "yellow", width:300,height:50 }}
         selectedValue={selectedLanguage}
         onValueChange={(itemValue, itemIndex) =>
           setSelectedLanguage(itemValue)
