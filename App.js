@@ -1,54 +1,48 @@
 //import * as React from 'react';
 import React, {useState} from 'react';
-import { Text, View,TouchableOpacity,Button } from 'react-native';
+//import { Text, View,TouchableOpacity,Button,TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {Picker} from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Ionicons } from '@expo/vector-icons';
+
+
+import HomeScreen from './src/Pages/HomeScreen';
+import SettingsScreen from './src/Pages/SettingsScreen';
+import Login from './src/Pages/Login';
+import Signin from './src/Pages/Signin';
+import Welcome from './src/Pages/Welcome';
 
 
 
-function HomeScreen() {
-  const [selectedLanguage, setSelectedLanguage] = useState('manisa');
-  return (
-    <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center', backgroundColor: '#f09',flexDirection: "column" }}>
-      <Text style={{ fontWeight: 'bold',  fontSize: 30 }}>Hastane kayıt randevu sistemine hoş geldiniz!</Text>
-      
-      <Picker
-        style={{ backgroundColor: "yellow", width:300,height:50 }}
-        selectedValue={selectedLanguage}
-        onValueChange={(itemValue, itemIndex) =>
-          setSelectedLanguage(itemValue)
-        }>
-        <Picker.Item label="Manisa Devlet Hastanesi" value="manisa" />
-        <Picker.Item label="Sakarya özel x Hastanesi" value="sakarya" />
-      </Picker>
-      
-      
-      <Button         
-        title="Randevu Oluştur"
-        onPress={() => alert('Randevunuz oluşturuldu !')}
-      />
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f90' }}>
-      <Text>Randevularım !</Text>
-      
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
+const stack = createNativeStackNavigator();
+
+function myStacks(){
+  return (
+    <stack.Navigator>      
+      <stack.Screen name="WelcomePage" component={Welcome}></stack.Screen>
+      <stack.Screen name="LoginPage" component={Login}></stack.Screen>
+      <stack.Screen name="SigninPage" component={Signin}></stack.Screen>
+    </stack.Navigator>
+  );
+}
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Home" component={HomeScreen} options={{
+                    tabBarIcon: ({size, color}) => (<Ionicons name={"home"} color={"blue"} size={28} />)
+                }} />
+      <Tab.Screen name="Settings" component={SettingsScreen} options={{
+                    tabBarIcon: ({size, color}) => (<Ionicons name={"settings-sharp"} color={"blue"} size={28} />)
+                }} />
+      <Tab.Screen name="Welcome" component={myStacks} options={{
+                    tabBarIcon: ({size, color}) => (<Ionicons name={"arrow-down-circle"} color={"blue"} size={28} />)
+                }} />
     </Tab.Navigator>
   );
 }
@@ -56,7 +50,7 @@ function MyTabs() {
 export default function App() {
   return (
     <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
+      <MyTabs />      
+    </NavigationContainer>    
   );
 }
