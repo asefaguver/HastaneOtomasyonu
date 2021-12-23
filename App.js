@@ -1,9 +1,11 @@
 //import * as React from 'react';
 import React, {useState} from 'react';
+
 //import { Text, View,TouchableOpacity,Button,TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import {Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,6 +22,9 @@ import Welcome from './src/Pages/Welcome';
 
 const Tab = createBottomTabNavigator();
 const stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+
 
 function myStacks(){
   return (
@@ -47,10 +52,20 @@ function MyTabs() {
   );
 }
 
+function MyDrawer(){
+  return (
+  <Drawer.Navigator>
+    <Drawer.Screen name="Deneme" component={MyTabs}></Drawer.Screen>          
+  </Drawer.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer>
-      <MyTabs />      
+      <MyDrawer />      
     </NavigationContainer>    
   );
 }
+
+
