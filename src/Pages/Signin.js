@@ -1,23 +1,38 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button } from 'react-native';
+import { app } from '../../Firebase';
+ 
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth(app);
 
 export default function Signin({navigation}) {
     const [text, onChangeText] = React.useState(null);
-    const [password, onChangePassword] = React.useState(null);
-    const [name, onChangeName] = React.useState(null);
+    const [password, onChangePassword] = React.useState(null);    
+    const [btn, btnState] = React.useState(false);
+    useEffect(()=>{
+      createUserWithEmailAndPassword(auth, text, password)
+      .then((userCredential) => {
+        navigation.navigate('Home');
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+    },[btn]);
   
     return (
     <View style={styles.container}>
       <Text>Signin</Text>
-      <TextInput style={styles.input}
-        onChangeText={onChangeName}
-        value={name}
-        placeholder="name surname"/>
+      
 
       <TextInput style={styles.input}
         onChangeText={onChangeText}
         value={text}
-        placeholder="username"/>
+        placeholder="mail"/>
 
         <TextInput
         style={styles.input}
@@ -27,7 +42,11 @@ export default function Signin({navigation}) {
         autoCorrect={false}
         secureTextEntry={true}
         />
-
+        <Button style={styles.buton}         
+        title="Giriş Yap"
+        color="#841584"
+        onPress={() => btnState(!btn)}
+      />
       <TouchableOpacity
                 onPress={() => navigation.navigate('WelcomePage')}
                 style={{ backgroundColor: 'green', margin:12 }}>

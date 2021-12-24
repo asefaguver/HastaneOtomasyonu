@@ -4,6 +4,23 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { app } from '../../Firebase';
+import { getFirestore } from "firebase/firestore"
+
+
+import { collection, query, where, getDocs, doc } from "firebase/firestore";
+const db = getFirestore(app);
+const q = collection(db, "hospitals");
+
+(async() => 
+{
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    dataSet.add(doc.id);
+  })
+})();
+const dataSet = new Set();
 
 
 export default function HomeScreen() {
@@ -11,7 +28,8 @@ export default function HomeScreen() {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-
+  
+  
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -37,8 +55,20 @@ export default function HomeScreen() {
         onValueChange={(itemValue, itemIndex) =>
           setSelectedLanguage(itemValue)
         }>
+         {dataSet.forEach(id => {<Picker.Item label={id} value="manisa" />} )}
         <Picker.Item label="Manisa Devlet Hastanesi" value="manisa" />
         <Picker.Item label="Sakarya özel x Hastanesi" value="sakarya" />
+      </Picker>
+
+      <Picker
+        style={{ backgroundColor: "yellow", width:300,height:50 }}
+        selectedValue={selectedLanguage}
+        onValueChange={(itemValue, itemIndex) =>
+          setSelectedLanguage(itemValue)
+        }>
+        <Picker.Item label="Göz hastalıkları" value="manisa" />
+        <Picker.Item label="Cildiye" value="sakarya" />
+        <Picker.Item label="Psikiyatri" value="sakarya" />
       </Picker>
       
       <Button onPress={showDatepicker} title="Show date picker!" />
