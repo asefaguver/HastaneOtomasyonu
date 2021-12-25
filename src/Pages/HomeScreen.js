@@ -55,9 +55,12 @@ export default function HomeScreen() {
         onValueChange={(itemValue, itemIndex) =>
           setSelectedLanguage(itemValue)
         }>
-         {dataSet.forEach(id => {<Picker.Item label={id} value="manisa" />} )}
+         
         <Picker.Item label="Manisa Devlet Hastanesi" value="manisa" />
-        <Picker.Item label="Sakarya özel x Hastanesi" value="sakarya" />
+        <Picker.Item label="Sakarya Eğitim Araştırma Hastanesi" value="sakarya" />
+        <Picker.Item label="Bakırköy Ruh Ve Sinir Hastalıkları Hastanesi" value="bakırköy" />
+        <Picker.Item label="Özel Acıbadem Hastanesi" value="istanbul" />
+        {dataSet.forEach(id => {<Picker.Item label={id} value="sakarya" />} )}
       </Picker>
 
       <Picker
@@ -68,7 +71,8 @@ export default function HomeScreen() {
         }>
         <Picker.Item label="Göz hastalıkları" value="manisa" />
         <Picker.Item label="Cildiye" value="sakarya" />
-        <Picker.Item label="Psikiyatri" value="sakarya" />
+        <Picker.Item label="Psikiyatri" value="bakırköy" />
+        <Picker.Item label="KBB" value="istanbul" />
       </Picker>
       
       <Button onPress={showDatepicker} title="Show date picker!" />
